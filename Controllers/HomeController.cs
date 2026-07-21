@@ -1,12 +1,14 @@
-using System.Diagnostics;
 using INFASS.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace INFASS.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        User user = new();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -32,11 +34,16 @@ namespace INFASS.Controllers
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
+            var users = new User
+            {
+                Email = email,
+                Password = password
+            };
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 return Json(new { success = false, message = "Please enter both email and password." });
             }
-            return Json(new { success = true, message = "Login successful!" });
+            return Json(new { success = true, message = $"{user._sqlLogin(users.Email, users.Password)}" });
         }
 
         [HttpGet]
@@ -48,6 +55,13 @@ namespace INFASS.Controllers
         [HttpPost]
         public IActionResult Register(string name, string email, string password, string confirmPassword)
         {
+            var users = new User
+            {
+                FullName = name,
+                Email = email,
+                Password = password
+            };
+
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
             {
                 return Json(new { success = false, message = "All fields are required." });
@@ -56,7 +70,7 @@ namespace INFASS.Controllers
             {
                 return Json(new { success = false, message = "Passwords do not match." });
             }
-            return Json(new { success = true, message = "Registration successful!" });
+            return Json(new { success = true, message = $"{user._sqlReg(users.Email, users.Password, users.FullName)}" });
         }
 
 
