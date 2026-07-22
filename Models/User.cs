@@ -4,16 +4,18 @@
     {
         public string FullName { get; set; }
         public string Email { get; set; }
+        public string Age { get; set; }
         public string Password { get; set; }
 
-        public string _sqlReg(string email, string password, string fullname)
+        public string _sqlReg(string fullname, string email,string age, string password)
         {
             Email = email;
             Password = password;
             FullName = fullname;
-            string[] U = { email, password, fullname };
+            Age = age;
+            string[] U = { fullname, email, age, password };
             string J = string.Join(", ", U);
-            string? sql = $"INSERT INTO User(FullName, Email, Password) \n VALUES({J})";
+            string? sql = $"INSERT INTO User(Fullname, Email, Age, Password) \n VALUES({J})";
             return sql;
         }
         public string _sqlLogin(string email, string password)

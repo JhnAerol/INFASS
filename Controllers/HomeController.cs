@@ -53,16 +53,17 @@ namespace INFASS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string name, string email, string password, string confirmPassword)
+        public IActionResult Register(string name, string email, string age, string password, string confirmPassword)
         {
             var users = new User
             {
                 FullName = name,
                 Email = email,
+                Age = age,
                 Password = password
             };
 
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword) || string.IsNullOrEmpty(age))
             {
                 return Json(new { success = false, message = "All fields are required." });
             }
@@ -70,7 +71,7 @@ namespace INFASS.Controllers
             {
                 return Json(new { success = false, message = "Passwords do not match." });
             }
-            return Json(new { success = true, message = $"{user._sqlReg(users.Email, users.Password, users.FullName)}" });
+            return Json(new { success = true, message = $"{user._sqlReg(users.FullName, users.Email, users.Age, users.Password)}" });
         }
 
 

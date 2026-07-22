@@ -32,6 +32,7 @@ $(document).ready(function () {
 
         let name = $("#name").val();
         let email = $("#email").val();
+        let age = $("#age").val();
         let password = $("#password").val();
         let confirmPassword = $("#confirmPassword").val();
 
@@ -42,6 +43,7 @@ $(document).ready(function () {
                 "name": name,
                 "email": email,
                 "password": password,
+                "age": age,
                 "confirmPassword": confirmPassword
             },
             success: function (response) {
