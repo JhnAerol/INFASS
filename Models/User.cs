@@ -7,17 +7,43 @@
         public string Age { get; set; }
         public string Password { get; set; }
 
-        public string _sqlReg(string fullname, string email,string age, string password)
+        public string _sqlReg(string[] values, string[] fields, string table_name)
         {
-            Email = email;
-            Password = password;
-            FullName = fullname;
-            Age = age;
-            string[] U = { fullname, email, age, password };
-            string J = string.Join(", ", U);
-            string? sql = $"INSERT INTO User(Fullname, Email, Age, Password) \n VALUES({J})";
+            string val = "";
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (int.TryParse(values[i], out _))
+                {
+                    val = val + $"{values[i]}";
+                }
+                else
+                {
+                    val = val + $"'{values[i]}'";
+                }
+                if (i < values.Length - 1)
+                {
+                    val = val + ", ";
+                }
+
+            }
+
+            string field = "";
+            for (int i = 0; i < fields.Length; i++)
+            {
+                field = field + $"{fields[i]}";
+
+                if (i < fields.Length - 1)
+                {
+                    field = field + ", ";
+                }
+
+            }
+
+            string sql = $"INSERT INTO {table_name}({field}) \n VALUES({val})";
+
             return sql;
         }
+
         public string _sqlLogin(string email, string password)
         {
             Email = email;

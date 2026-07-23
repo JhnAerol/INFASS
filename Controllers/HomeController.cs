@@ -55,12 +55,14 @@ namespace INFASS.Controllers
         [HttpPost]
         public IActionResult Register(string name, string email, string age, string password, string confirmPassword)
         {
-            var users = new User
+            string[] values =
             {
-                FullName = name,
-                Email = email,
-                Age = age,
-                Password = password
+                name, email, age, password
+            };
+
+            string[] fields =
+            {
+                "Name", "Email", "Age", "Password"
             };
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword) || string.IsNullOrEmpty(age))
@@ -71,7 +73,7 @@ namespace INFASS.Controllers
             {
                 return Json(new { success = false, message = "Passwords do not match." });
             }
-            return Json(new { success = true, message = $"{user._sqlReg(users.FullName, users.Email, users.Age, users.Password)}" });
+            return Json(new { success = true, message = $"{user._sqlReg(values, fields, "User")}" });
         }
 
 
