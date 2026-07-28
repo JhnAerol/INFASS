@@ -53,44 +53,6 @@ namespace INFASS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(string id, string name, string email, string age, string password)
-        {
-            string[] values =
-            {
-                name,
-                email,
-                age,
-                password
-            };
-
-            string[] fields =
-            {
-                "Name",
-                "Email",
-                "Age",
-                "Password"
-            };
-
-            return Json(new { success = true, message = user._sqlUpdate(id, values, fields, "User") });
-        }
-
-        [HttpPost]
-        public IActionResult Delete(string id)
-        {
-            return Json(new
-            {
-                success = true,
-                message = user._sqlDelete(id, "User")
-            });
-        }
-
-        [HttpGet]
-        public IActionResult GetTableSql()
-        {
-            return Json(new { success = true, message = user._sqlGetTable("User")});
-        }
-
-        [HttpPost]
         public IActionResult Register(string name, string email, string age, string password, string confirmPassword)
         {
             string[] values =
