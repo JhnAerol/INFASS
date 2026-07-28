@@ -7,6 +7,39 @@
         public string Age { get; set; }
         public string Password { get; set; }
 
+        public string _sqlGetTable(string tableName)
+        {
+            string sql = $"SELECT * FROM {tableName}";
+            return sql;
+        }
+
+        public string _sqlDelete(string id, string tableName)
+        {
+            return $"DELETE FROM {tableName} WHERE Id = {id}";
+        }
+
+        public string _sqlUpdate(string id, string[] values, string[] fields, string tableName)
+        {
+            string setClause = "";
+
+            for (int i = 0; i < fields.Length; i++)
+            {
+                if (int.TryParse(values[i], out _))
+                {
+                    setClause += $"{fields[i]} = {values[i]}";
+                }
+                else
+                {
+                    setClause += $"{fields[i]} = '{values[i]}'";
+                }
+
+                if (i < fields.Length - 1)
+                    setClause += ", ";
+            }
+
+            return $"UPDATE {tableName} SET {setClause} WHERE Id = {id}";
+        }
+
         public string _sqlReg(string[] values, string[] fields, string table_name)
         {
             string val = "";

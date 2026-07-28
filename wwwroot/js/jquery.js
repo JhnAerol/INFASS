@@ -16,7 +16,6 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert(response.message)
-                    //alert("Successful Login!\n\n" + "Email: " + email + "\n" + "Password: " + password);
                 } else {
                     alert("Error: " + response.message);
                 }
@@ -49,7 +48,6 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert(response.message)
-                    //alert("Registration successful!\n\n" + "Name: " + name + "\n" + "Email: " + email + "\n" + "Password: " + password);
                 } else {
                     alert("Error: " + response.message);
                 }
@@ -59,4 +57,15 @@ $(document).ready(function () {
             }
         });
     });
+    if ($("#registerForm").length) {
+
+        $.ajax({
+            url: "/Home/GetTableSql",
+            type: "GET",
+            success: function (response) {
+                alert(response.message);
+            }
+        });
+
+    }
 });
