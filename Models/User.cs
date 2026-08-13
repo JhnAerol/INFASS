@@ -53,5 +53,7 @@
             string? sql = $"INSERT INTO User(Email, Password) \n VALUES({J})";
             return sql;
         }
+
+        public string _sqlGetTable(string tableName) { string sql = $"SELECT * FROM {tableName}"; return sql; }
     }
 }

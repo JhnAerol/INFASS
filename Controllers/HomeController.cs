@@ -52,6 +52,16 @@ namespace INFASS.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult GetUsersSql()
+        {
+            return Json(new
+            {
+                success = true,
+                message = user._sqlGetTable("User")
+            });
+        }
+
         [HttpPost]
         public IActionResult Register(string name, string email, string age, string password, string confirmPassword)
         {
@@ -76,6 +86,34 @@ namespace INFASS.Controllers
             return Json(new { success = true, message = $"{user._sqlReg(values, fields, "User")}" });
         }
 
+        [HttpPost]
+        public IActionResult Update(string name, string email, string age, string password)
+        {
+            string sql = $"UPDATE User SET " +
+                         $"Name = '{name}', " +
+                         $"Email = '{email}', " +
+                         $"Age = {age}, " +
+                         $"Password = '{password}' " +
+                         $"WHERE Email = '{email}'";
+
+            return Json(new
+            {
+                success = true,
+                message = sql
+            });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string email)
+        {
+            string sql = $"DELETE FROM User WHERE Email = '{email}'";
+
+            return Json(new
+            {
+                success = true,
+                message = sql
+            });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

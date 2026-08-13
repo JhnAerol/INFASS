@@ -59,4 +59,62 @@ $(document).ready(function () {
             }
         });
     });
+
+
+    if ($("#registerForm").length) {
+
+        $.ajax({
+            url: "/Home/GetUsersSql",
+            type: "GET",
+            success: function (response) {
+                alert(response.message);
+            }
+        });
+
+    }
+
+    $("#updateButton").click(function () {
+
+        let name = $("#name").val();
+        let email = $("#email").val();
+        let age = $("#age").val();
+        let password = $("#password").val();
+
+        $.ajax({
+            url: "/Home/Update",
+            type: "POST",
+            data: {
+                name: name,
+                email: email,
+                age: age,
+                password: password
+            },
+            success: function (response) {
+                alert(response.message);
+            },
+            error: function () {
+                alert("An error occurred during update.");
+            }
+        });
+    });
+
+
+    $("#deleteButton").click(function () {
+
+        let email = $("#email").val();
+
+        $.ajax({
+            url: "/Home/Delete",
+            type: "POST",
+            data: {
+                email: email
+            },
+            success: function (response) {
+                alert(response.message);
+            },
+            error: function () {
+                alert("An error occurred during deletion.");
+            }
+        });
+    });
 });
